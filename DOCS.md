@@ -505,18 +505,22 @@ dependencies:
   webview_flutter: ^4.10.0
 ```
 
-**Step 2 — Inject on page load:**
+**Step 2 — Implement WebView Capture Page (`FlutterWebCapturePage`):**
+
+Below is the complete stateful widget implementation to inject the capture tool, trigger captures, and handle results in Dart:
 
 ```dart
+import 'package:flutter/material.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
-class MyWebView extends StatefulWidget {
-  const MyWebView({super.key});
+class FlutterWebCapturePage extends StatefulWidget {
+  const FlutterWebCapturePage({super.key});
+
   @override
-  State<MyWebView> createState() => _MyWebViewState();
+  State<FlutterWebCapturePage> createState() => _FlutterWebCapturePageState();
 }
 
-class _MyWebViewState extends State<MyWebView> {
+class _FlutterWebCapturePageState extends State<FlutterWebCapturePage> {
   late final WebViewController _controller;
 
   @override
@@ -524,90 +528,81 @@ class _MyWebViewState extends State<MyWebView> {
     super.initState();
     _controller = WebViewController()
       ..setJavaScriptMode(JavaScriptMode.unrestricted)
-      ..setNavigationDelegate(NavigationDelegate(
-        onPageFinished: (url) {
-          _controller.runJavaScript('''
-            (function() {
-              window.UiCaptureConfig = { enabled: true };
-              var s = document.createElement('script');
-              s.src = 'https://cdn.jsdelivr.net/gh/tukang-prompt-ai/ui-capture-tool@v1.1.1/ui-ux-capture-tool.min.js';
-              document.body.appendChild(s);
-            })();
-          ''');
+      ..setNavigationDelegate(
+        NavigationDelegate(
+          onPageFinished: (url) async {
+            await _injectCaptureTool();
+          },
+        ),
+      )
+      ..addJavaScriptChannel(
+        'FlutterBridge',
+        onMessageReceived: (JavaScriptMessage message) {
+          _handleCaptureResult(message.message);
         },
-      ))
-      ..loadRequest(Uri.parse('https://your-app.com'));
+      )
+      ..loadRequest(Uri.parse('https://your-flutter-web-url.com'));
+  }
+
+  Future<void> _injectCaptureTool() async {
+    final script = '''
+      (function() {
+        if (window.__uiCaptureInjected) return;
+        window.__uiCaptureInjected = true;
+        window.UiCaptureConfig = { enabled: true };
+        var s = document.createElement('script');
+        s.src = 'https://cdn.jsdelivr.net/gh/tukang-prompt-ai/ui-capture-tool@v1.1.1/ui-ux-capture-tool.min.js';
+        s.defer = true;
+        document.body.appendChild(s);
+      })();
+    ''';
+    await _controller.runJavaScript(script);
+  }
+
+  void _handleCaptureResult(String data) {
+    // Contains JSON UX Graph, AI Prompt Markdown, or capture status
+    debugPrint('Capture result received: $data');
+  }
+
+  Future<void> captureFlutterPage() async {
+    final script = '''
+      (function() {
+        if (typeof document.getElementById('frameworkTargetSelect') !== 'undefined') {
+          var target = document.getElementById('frameworkTargetSelect');
+          if (target) target.value = 'flutter';
+        }
+        if (typeof doCapture === 'function') {
+          window._captureMode = 'hifi';
+          doCapture('flutter-page');
+        }
+        if (typeof generateDynamicAIPrompt === 'function') {
+          var prompt = generateDynamicAIPrompt();
+          FlutterBridge.postMessage(prompt);
+        }
+      })();
+    ''';
+    await _controller.runJavaScript(script);
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Web Capture')),
+      appBar: AppBar(
+        title: const Text('Flutter Web Capture'),
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.camera_alt),
+            onPressed: captureFlutterPage,
+          ),
+        ],
+      ),
       body: WebViewWidget(controller: _controller),
     );
   }
 }
 ```
 
-**Step 3 — Trigger capture from Dart:**
-
-```dart
-// Take a Hi-Fi screenshot from Dart code
-Future<void> captureScreenshot() async {
-  await _controller.runJavaScript('''
-    if (typeof doCapture === 'function') {
-      window._captureMode = 'hifi';
-      doCapture('flutter-page');
-    }
-  ''');
-}
-```
-
-**Step 4 — Receive AI Prompt / JSON back in Dart:**
-
-```dart
-_controller = WebViewController()
-  ..addJavaScriptChannel(
-    'FlutterBridge',
-    onMessageReceived: (JavaScriptMessage msg) {
-      final captureData = msg.message; // JSON string or AI Prompt Markdown
-      print('Received: $captureData');
-      // Save to file, upload to API, display in dialog, etc.
-    },
-  );
-
-// Then inject this JS to send data back:
-await _controller.runJavaScript('''
-  if (typeof generateDynamicAIPrompt === 'function') {
-    FlutterBridge.postMessage(generateDynamicAIPrompt());
-  }
-''');
-```
-
-**Step 5 — Trigger specific export formats:**
-
-```dart
-// Export as JSON UX Graph
-await _controller.runJavaScript('''
-  document.getElementById('exportFormatSelect').value = 'json';
-  doCapture('my-page');
-''');
-
-// Export as HTML Wireframe
-await _controller.runJavaScript('''
-  document.getElementById('exportFormatSelect').value = 'wireframe';
-  doCapture('my-page');
-''');
-
-// Set framework target to Flutter in AI Prompt
-await _controller.runJavaScript('''
-  document.getElementById('frameworkTargetSelect').value = 'flutter';
-  document.getElementById('exportFormatSelect').value = 'prompt';
-  doCapture('my-flutter-page');
-''');
-```
-
-> ✅ Works with any Flutter WebView: `webview_flutter`, `flutter_inappwebview`, `webview_flutter_plus`. Requires `JavaScriptMode.unrestricted`.
+> ✅ Works with any Flutter WebView package (`webview_flutter`, `flutter_inappwebview`). Requires `JavaScriptMode.unrestricted` enabled so the script can inject and execute properly.
 
 ### React Native
 
