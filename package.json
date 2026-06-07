@@ -9,7 +9,9 @@
     "test": "echo \"Error: no test specified\" && exit 0"
   },
   "devDependencies": {
+    "cheerio": "^1.0.0-rc.12",
     "javascript-obfuscator": "^5.4.3",
+    "playwright": "^1.40.0",
     "terser": "^5.19.2"
   },
   "keywords": [

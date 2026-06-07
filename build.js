@@ -51,10 +51,28 @@ async function bundle(srcDir, outputMainPath, outputMinPath) {
     const autoTour = read('auto-tour.js');
     const captureEngine = read('capture-engine.js');
 
-    // Construct unified IIFE
+    let flutterStyleExtractor = '';
+    const extractorPath = path.join(srcDir, 'flutter-style-extractor.js');
+    if (fs.existsSync(extractorPath)) {
+        flutterStyleExtractor = fs.readFileSync(extractorPath, 'utf8').replace(/^#!.*/, '');
+    }
+
+    // Construct unified IIFE (Dual-environment support: Node.js and Browser)
     const iifeContent = `${HEADER_COMMENT}
 (function () {
-${envCheckPart}
+    if (typeof window === 'undefined') {
+        // Node.js environment - run the Flutter style extractor CLI
+        if (typeof require !== 'undefined') {
+            const runExtractor = () => {
+                ${flutterStyleExtractor}
+            };
+            runExtractor();
+        }
+        return;
+    }
+
+    // Browser environment - run the capture widget
+    ${envCheckPart}
 
     // --- Inlined Stylesheets ---
     const WIDGET_CSS = \`
