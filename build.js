@@ -97,14 +97,18 @@ ${mainPanelPart}
 })();
 `;
 
+    const packageJson = JSON.parse(fs.readFileSync(path.join(__dirname, 'package.json'), 'utf8'));
+    const version = packageJson.version;
+    const finalIifeContent = iifeContent.replace(/__VERSION__/g, version);
+
     // Write unminified main file
-    fs.writeFileSync(outputMainPath, iifeContent, 'utf8');
-    console.log(`Successfully wrote unminified bundle: ${outputMainPath}`);
+    fs.writeFileSync(outputMainPath, finalIifeContent, 'utf8');
+    console.log(`Successfully wrote unminified bundle: ${outputMainPath} (version ${version})`);
 
     if (outputMinPath) {
         console.log(`Minifying and obfuscating ${outputMainPath} -> ${outputMinPath}...`);
         try {
-            const minified = await minify(iifeContent, {
+            const minified = await minify(finalIifeContent, {
                 compress: {
                     dead_code: true,
                     drop_debugger: true,
