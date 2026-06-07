@@ -1,0 +1,35 @@
+{
+  "name": "ui-capture-tool",
+  "version": "1.1.1",
+  "description": "Self-contained floating UI/UX capture widget with automatic wireframing (Wirify) and sequential page auto tour.",
+  "main": "ui-ux-capture-tool.min.js",
+  "types": "index.d.ts",
+  "scripts": {
+    "build": "node build.js",
+    "test": "echo \"Error: no test specified\" && exit 0"
+  },
+  "devDependencies": {
+    "javascript-obfuscator": "^5.4.3",
+    "terser": "^5.19.2"
+  },
+  "keywords": [
+    "ui",
+    "ux",
+    "capture",
+    "screenshot",
+    "wireframe",
+    "wirify",
+    "developer-tools",
+    "testing"
+  ],
+  "author": "perawitayasa",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tukang-prompt-ai/ui-capture-tool.git"
+  },
+  "bugs": {
+    "url": "https://github.com/tukang-prompt-ai/ui-capture-tool/issues"
+  },
+  "homepage": "https://github.com/tukang-prompt-ai/ui-capture-tool#readme"
+}

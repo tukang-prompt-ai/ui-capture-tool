@@ -1,0 +1,11 @@
+# Development sources
+src/
+v1/
+build.js
+ui-ux-capture-tool.main.js
+
+# Dependency & environment configs
+node_modules/
+package-lock.json
+.gitignore
+.npmignore
