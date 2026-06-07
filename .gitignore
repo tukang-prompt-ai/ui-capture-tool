@@ -1,13 +1,17 @@
-index.html
+# ── Private source code (not distributed on GitHub) ──────────
+src/
+ui-ux-capture-tool.main.js
+v1/
+
+# ── Private blueprints ────────────────────────────────────────
 BLUEPRINT/V1.md
 BLUEPRINT/V2.md
 BLUEPRINT/V3.md
-BLUEPRINT/ENNGINE/HXRE.md
-ui-ux-capture-tool.main.js
-
-v1/
-node_modules/
-src/
-
-.gitignore
 BLUEPRINT/ENGINE/HXRE.md
+BLUEPRINT/ENNGINE/HXRE.md
+
+# ── Test page (local dev only) ────────────────────────────────
+index.html
+
+# ── Node modules ──────────────────────────────────────────────
+node_modules/
