@@ -89,42 +89,47 @@ Generates framework-specific AI reconstruction instructions for: **Flutter (Dart
 
 ## Quick Start
 
-**One line — drop into any HTML page:**
+**Satu baris kode — langsung sematkan ke halaman HTML Anda:**
 
 ```html
 <script src="https://cdn.jsdelivr.net/gh/tukang-prompt-ai/ui-capture-tool@main/ui-ux-capture-tool.min.js"></script>
 ```
 
-The widget activates automatically on `localhost`, `127.0.0.1`, `*.local`, `*.test` domains.
+- **Letakan di mana**: Di dalam file HTML utama Anda, letakkan tag `<script>` ini di bagian paling bawah tepat sebelum tag penutup `</body>`.
+- **Untuk apa**: Memuat widget UI/UX Capture secara otomatis. Secara default, widget ini mendeteksi dan aktif secara otomatis di domain lokal seperti `localhost`, `127.0.0.1`, `*.local`, atau `*.test`.
 
-**Or use the bookmarklet on any page:**
+**Atau gunakan Bookmarklet di halaman web mana saja:**
 
 ```javascript
-javascript:(function(){var s=document.createElement('script');s.src='https://cdn.jsdelivr.net/gh/tukang-prompt-ai/ui-capture-tool@v1.1.1/ui-ux-capture-tool.min.js?v='+Date.now();window.UiCaptureConfig={enabled:true};document.body.appendChild(s);})();\n
+javascript:(function(){var s=document.createElement('script');s.src='https://cdn.jsdelivr.net/gh/tukang-prompt-ai/ui-capture-tool@v1.1.1/ui-ux-capture-tool.min.js?v='+Date.now();window.UiCaptureConfig={enabled:true};document.body.appendChild(s);})();
 ```
 
-Create a browser bookmark and paste the above as the URL.
+- **Letakan di mana**: Buat bookmark baru di browser Anda (Chrome, Safari, Firefox, Edge), beri nama (misalnya "UI UX Capture"), dan tempel (paste) seluruh baris kode JavaScript di atas ke dalam kolom URL/Address bookmark tersebut.
+- **Untuk apa**: Mengaktifkan widget secara paksa di situs web apa pun di internet yang sedang Anda buka. Cukup klik bookmark tersebut saat berada di halaman web target untuk memunculkan tombol capture mengambang.
 
 ---
 
 ## Installation
 
-### CDN (Recommended)
+### CDN (Direkomendasikan)
 
 ```html
-<!-- Latest version -->
+<!-- Versi Terbaru (Selalu Mengikuti Branch Utama) -->
 <script src="https://cdn.jsdelivr.net/gh/tukang-prompt-ai/ui-capture-tool@main/ui-ux-capture-tool.min.js"></script>
 
-<!-- Pinned to v1.1.1 (recommended for production) -->
+<!-- Versi Tersemat v1.1.1 (Sangat direkomendasikan untuk stabilitas) -->
 <script src="https://cdn.jsdelivr.net/gh/tukang-prompt-ai/ui-capture-tool@v1.1.1/ui-ux-capture-tool.min.js"></script>
 ```
 
+- **Letakan di mana**: Di dalam berkas tata letak (layout) HTML atau file template utama sebelum tag penutup `</body>`.
+- **Untuk apa**: Mengimpor pustaka langsung dari jaringan pengiriman konten (CDN) jsDelivr tanpa perlu mengunduh file secara lokal. Versi tersemat (`@v1.1.1`) memastikan kode yang dimuat konsisten dan tidak berubah ketika ada pembaruan di repositori utama.
+
 ### NPM / Package Manager
 
-> **Note:** The package uses GitHub as its registry. Due to common SSH key restrictions, use the **HTTPS tarball URL** which requires no SSH setup:
+> **Catatan:** Paket ini di-host di repositori GitHub. Guna menghindari masalah otentikasi kunci SSH (`Permission denied (publickey)`), disarankan untuk menggunakan **URL tarball HTTPS** berikut yang tidak memerlukan kunci SSH:
 
 ```bash
-# npm (recommended — no SSH required)
+# npm (direkomendasikan — tanpa perlu autentikasi SSH)
 npm install --save-dev https://github.com/tukang-prompt-ai/ui-capture-tool/archive/refs/tags/v1.1.1.tar.gz
 
 # yarn
@@ -137,15 +142,19 @@ pnpm add -D https://github.com/tukang-prompt-ai/ui-capture-tool/archive/refs/tag
 bun add --dev https://github.com/tukang-prompt-ai/ui-capture-tool/archive/refs/tags/v1.1.1.tar.gz
 ```
 
-> **Troubleshooting SSH Error:** If you see `git@github.com: Permission denied (publickey)`, always use the tarball URL above — it uses HTTPS and does not require SSH keys.
+- **Letakan di mana**: Jalankan perintah ini di dalam aplikasi terminal pada direktori utama (root directory) proyek Anda.
+- **Untuk apa**: Mengunduh dan mendaftarkan paket UI/UX Capture Suite sebagai dependensi pengembangan (`devDependencies`) proyek Anda agar dapat dikelola oleh pengelola paket.
 
-### Manual Download
+### Unduh Manual (Manual Download)
 
-Download the compiled file from [GitHub Releases](https://github.com/tukang-prompt-ai/ui-capture-tool/releases) and include it locally:
+Unduh file hasil kompilasi langsung dari halaman [GitHub Releases](https://github.com/tukang-prompt-ai/ui-capture-tool/releases) dan tempatkan pada server lokal Anda:
 
 ```html
 <script src="/path/to/ui-ux-capture-tool.min.js"></script>
 ```
+
+- **Letakan di mana**: Pindahkan file `.min.js` yang telah diunduh ke folder aset statis proyek Anda (misalnya `public/`, `static/`, atau `dist/`), lalu rujuk file tersebut menggunakan tag `<script>` dengan path relatif yang sesuai.
+- **Untuk apa**: Digunakan jika proyek Anda berjalan di lingkungan intranet tanpa akses internet (offline) atau ketika kebijakan keamanan perusahaan melarang pemuatan script dari CDN eksternal.
 
 ---
 
@@ -294,10 +303,14 @@ A self-contained, browser-openable `.html` file with:
 
 ```html
 <body>
-  <!-- content -->
+  <!-- Konten halaman Anda -->
   <script src="https://cdn.jsdelivr.net/gh/tukang-prompt-ai/ui-capture-tool@main/ui-ux-capture-tool.min.js"></script>
 </body>
 ```
+
+#### Panduan Penggunaan:
+1. **Letakan di mana**: Di dalam file `.html` statis Anda, letakkan di bagian bawah sebelum penutupan tag `</body>`.
+2. **Untuk apa**: Menyisipkan widget secara langsung untuk halaman HTML tradisional/sederhana. Skrip CDN akan dimuat setelah seluruh elemen DOM selesai di-render.
 
 </details>
 
@@ -331,6 +344,14 @@ export default function RootLayout({ children }) {
 }
 ```
 
+#### Panduan Penggunaan:
+1. **Letakan di mana**:
+   - Kode bagian pertama (`DevCapture.tsx`) diletakkan pada folder komponen Anda, misalnya di `components/DevCapture.tsx`.
+   - Kode bagian kedua diletakkan pada file layout root utama Next.js Anda di `app/layout.tsx`.
+2. **Untuk apa**:
+   - **`DevCapture.tsx`**: Menggunakan komponen client (`'use client'`) dengan React hook `useEffect` untuk membuat tag `<script>` secara dinamis dan menyuntikkannya ke halaman hanya di lingkungan pengembangan (`development`).
+   - **`layout.tsx`**: Memuat komponen `DevCapture` secara kondisional di dalam root layout agar widget ini tersedia di setiap rute halaman Next.js selama proses development tanpa memengaruhi bundle production.
+
 </details>
 
 <details>
@@ -347,6 +368,10 @@ export default defineNuxtPlugin(() => {
 });
 ```
 
+#### Panduan Penggunaan:
+1. **Letakan di mana**: Buat file baru bernama `devCapture.client.ts` di dalam direktori `plugins/` proyek Nuxt Anda.
+2. **Untuk apa**: Sufiks `.client.ts` memastikan plugin ini hanya dijalankan di sisi browser (client-side). Blok `if (process.dev)` memastikan widget hanya akan dimuat dan disuntikkan secara dinamis ke dokumen saat aplikasi Vue/Nuxt dijalankan dalam mode pengembangan (development mode).
+
 </details>
 
 <details>
@@ -358,6 +383,10 @@ export default defineNuxtPlugin(() => {
   <script src="https://cdn.jsdelivr.net/gh/tukang-prompt-ai/ui-capture-tool@main/ui-ux-capture-tool.min.js"></script>
 @endif
 ```
+
+#### Panduan Penggunaan:
+1. **Letakan di mana**: Di dalam template layout utama Blade Anda (biasanya `resources/views/layouts/app.blade.php`), letakkan di bagian bawah sebelum tag penutup `</body>`.
+2. **Untuk apa**: Menggunakan fungsi bawaan Laravel `app()->isLocal()` untuk mendeteksi apakah aplikasi Laravel sedang berjalan di lingkungan lokal. Jika bernilai true, tag script CDN akan dirender secara dinamis untuk memudahkan pengambilan sampel UI dari browser lokal.
 
 </details>
 
@@ -376,6 +405,10 @@ function enqueue_ui_capture() {
 add_action('wp_enqueue_scripts', 'enqueue_ui_capture');
 ```
 
+#### Panduan Penggunaan:
+1. **Letakan di mana**: Di dalam file `functions.php` dari tema WordPress aktif Anda.
+2. **Untuk apa**: Menggunakan kait aksi `wp_enqueue_scripts` bawaan WordPress untuk mendaftarkan dan memuat script CDN secara aman. Pemeriksaan konstanta `WP_DEBUG` memastikan widget ini tidak akan pernah dimuat atau terlihat oleh pengguna saat situs web WordPress berada dalam mode production.
+
 </details>
 
 <details>
@@ -392,6 +425,12 @@ add_action('wp_enqueue_scripts', 'enqueue_ui_capture');
   <%= javascript_include_tag "https://cdn.jsdelivr.net/gh/tukang-prompt-ai/ui-capture-tool@main/ui-ux-capture-tool.min.js" %>
 <% end %>
 ```
+
+#### Panduan Penggunaan:
+1. **Letakan di mana**:
+   - **Django/Flask**: Di berkas template dasar (seperti `base.html`), letakkan di bagian akhir body.
+   - **Ruby on Rails**: Di berkas tata letak aplikasi Rails (`app/views/layouts/application.html.erb`).
+2. **Untuk apa**: Menyuntikkan script secara kondisional berdasarkan variabel lingkungan lokal framework web backend masing-masing agar aman dari pemuatan di production server.
 
 </details>
 
@@ -493,16 +532,36 @@ class _FlutterWebCapturePageState extends State<FlutterWebCapturePage> {
 }
 ```
 
+#### Panduan Penggunaan & Peletakan Kode (Usage & Placement Guide):
+1. **Prasyarat Dependensi**:
+   - Tambahkan paket `webview_flutter` di dalam berkas `pubspec.yaml` proyek Flutter Anda:
+     ```yaml
+     dependencies:
+       webview_flutter: ^4.10.0
+     ```
+2. **Peletakan Berkas Kode**:
+   - Buat berkas Dart baru bernama `flutter_web_capture_page.dart` di dalam direktori `lib/` proyek Flutter Anda (misalnya: `lib/flutter_web_capture_page.dart`).
+   - Tempelkan (paste) seluruh kode `StatefulWidget` di atas ke dalam berkas tersebut.
+3. **Penjelasan Alur & Logika Kode**:
+   - **`initState()` (Inisialisasi WebView)**: Dipanggil saat halaman pertama kali dimuat. Di sini kita membuat `WebViewController` dan menyetel `setJavaScriptMode(JavaScriptMode.unrestricted)` agar WebView dapat mengeksekusi JavaScript yang kita injeksikan.
+   - **`_injectCaptureTool()` (Suntikkan Pustaka)**: Dipanggil secara otomatis di dalam delegasi `onPageFinished` ketika WebView selesai memuat situs target. Fungsi ini menambahkan tag `<script>` yang menunjuk ke berkas CDN `ui-ux-capture-tool.min.js`. Skrip ini dilindungi oleh bendera `window.__uiCaptureInjected` agar tidak mengalami duplikasi pemuatan.
+   - **`FlutterBridge` (JavaScript Channel)**: Berfungsi sebagai jembatan komunikasi dua arah. Ketika tombol capture ditekan di web, Javascript akan mengirimkan hasil capture (teks AI Prompt, JSON, atau status gambar) ke native Flutter menggunakan perintah `FlutterBridge.postMessage(data)`.
+   - **`_handleCaptureResult()`**: Method penampung hasil di sisi Dart. Tempatkan logika untuk menyimpan hasil capture ke penyimpanan lokal perangkat atau mengirimkannya ke API server Anda di dalam method ini.
+   - **`captureFlutterPage()` (Pemicu dari Native)**: Dipanggil saat tombol ikon kamera di AppBar ditekan. Method ini menjalankan kode JavaScript di dalam WebView untuk memaksa konfigurasi target ke framework `flutter`, menyetel mode ke `hifi`, memicu capture, dan memposting hasilnya kembali ke Dart.
+
 </details>
 
 <details>
 <summary><strong>React Native</strong></summary>
 
 ```tsx
+import { useRef } from 'react';
 import { WebView } from 'react-native-webview';
 
 const INJECT = `
   (function() {
+    if (window.__uiCaptureInjected) return;
+    window.__uiCaptureInjected = true;
     window.UiCaptureConfig = { enabled: true };
     var s = document.createElement('script');
     s.src = 'https://cdn.jsdelivr.net/gh/tukang-prompt-ai/ui-capture-tool@v1.1.1/ui-ux-capture-tool.min.js';
@@ -517,12 +576,33 @@ export default function CaptureWebView() {
       ref={ref}
       source={{ uri: 'https://your-app.com' }}
       injectedJavaScriptBeforeContentLoaded={INJECT}
-      onMessage={e => console.log(JSON.parse(e.nativeEvent.data))}
+      onMessage={e => {
+        try {
+          const data = JSON.parse(e.nativeEvent.data);
+          console.log('Capture result received:', data);
+        } catch (err) {
+          console.log('Message received:', e.nativeEvent.data);
+        }
+      }}
       javaScriptEnabled={true}
     />
   );
 }
 ```
+
+#### Panduan Penggunaan & Peletakan Kode:
+1. **Prasyarat Dependensi**:
+   - Pastikan Anda sudah menginstal paket `react-native-webview` di proyek React Native Anda:
+     ```bash
+     npm install react-native-webview
+     # atau
+     yarn add react-native-webview
+     ```
+2. **Letakan di mana**: Buat file komponen baru seperti `CaptureWebView.tsx` di folder screen atau komponen Anda (misalnya `components/CaptureWebView.tsx`), lalu impor komponen ini di mana Anda ingin merender situs web target.
+3. **Penjelasan Logika Kode**:
+   - **`WebView`**: Komponen native React Native untuk merender halaman web target. Properti `javaScriptEnabled={true}` harus disetel agar skrip JavaScript dapat berjalan.
+   - **`INJECT`**: String berisi fungsi JavaScript IIFE yang disuntikkan secara dinamis sebelum konten dimuat menggunakan `injectedJavaScriptBeforeContentLoaded`. Skrip ini memuat widget capture langsung dari CDN dan melindunginya agar tidak diinjeksi berulang kali dengan flag `window.__uiCaptureInjected`.
+   - **`onMessage`**: Callback native yang menangkap data yang dikirimkan oleh WebView (melalui `window.ReactNativeWebView.postMessage(data)`). Digunakan untuk menerima hasil capture UI/UX atau log status lainnya di sisi native React Native.
 
 </details>
 
@@ -530,11 +610,20 @@ export default function CaptureWebView() {
 <summary><strong>Ionic (Angular / React)</strong></summary>
 
 ```typescript
-// Angular
+// src/app/app.component.ts
+import { Component, OnInit } from '@angular/core';
 import { Platform } from '@ionic/angular';
-export class AppComponent {
+
+@Component({
+  selector: 'app-root',
+  templateUrl: 'app.component.html',
+  styleUrls: ['app.component.scss'],
+})
+export class AppComponent implements OnInit {
   constructor(private platform: Platform) {}
+
   ngOnInit() {
+    // Hanya muat script jika aplikasi berjalan di web browser (bukan aplikasi native Capacitor)
     if (!this.platform.is('capacitor')) {
       const s = document.createElement('script');
       s.src = 'https://cdn.jsdelivr.net/gh/tukang-prompt-ai/ui-capture-tool@main/ui-ux-capture-tool.min.js';
@@ -544,23 +633,35 @@ export class AppComponent {
 }
 ```
 
+#### Panduan Penggunaan & Peletakan Kode:
+1. **Letakan di mana**: Diletakkan di file inisialisasi komponen utama aplikasi Angular Anda, yaitu `app.component.ts` (atau di berkas entri React `App.tsx` jika Anda menggunakan Ionic React).
+2. **Untuk apa**: Menggunakan layanan `Platform` dari `@ionic/angular` untuk memeriksa platform aktif. Jika dijalankan di browser web biasa (bukan dibungkus oleh Capacitor native), widget capture disuntikkan secara dinamis ke dokumen saat aplikasi pertama kali dimuat (`ngOnInit`).
+
 </details>
 
 <details>
 <summary><strong>Capacitor.js / Tauri / Electron</strong></summary>
 
 ```js
-// Capacitor — works on localhost in dev mode (auto-activates)
-// For production builds, add before loading:
+// 1. Capacitor — Letakkan pada file index.html atau entri utama JavaScript Anda
+// Secara default aktif otomatis di localhost dalam mode dev. Untuk mode production, paksa aktifkan:
 window.UiCaptureConfig = { enabled: true };
 
-// Tauri — auto-activates in dev mode (served from localhost)
+// 2. Tauri — Letakkan pada file entri JavaScript utama aplikasi web Anda
+// Aktif otomatis di mode dev (karena Tauri menyajikan aplikasi lewat localhost)
 
-// Electron — add to preload.js:
+// 3. Electron — Letakkan pada file preload.js sebelum BrowserWindow diinisialisasi
 if (process.env.NODE_ENV === 'development') {
   window.UiCaptureConfig = { enabled: true };
 }
 ```
+
+#### Panduan Penggunaan & Peletakan Kode:
+1. **Letakan di mana**:
+   - **Capacitor**: Letakkan pada file root index aplikasi web Anda (`public/index.html` atau `index.js`).
+   - **Tauri**: Letakkan pada file inisialisasi frontend JavaScript utama Anda (misalnya `src/main.js` atau `index.html`).
+   - **Electron**: Letakkan pada berkas skrip jembatan preload (`preload.js`) proyek Anda.
+2. **Untuk apa**: Mendeteksi jika aplikasi berjalan di dalam sandbox pembungkus desktop/mobile (Capacitor/Tauri/Electron) dan mengaktifkan bendera `window.UiCaptureConfig = { enabled: true }` agar widget capture mengetahui bahwa ia memiliki izin penuh untuk aktif dan memuat di lingkungan runtime hibrida tersebut.
 
 </details>
 
@@ -568,16 +669,19 @@ if (process.env.NODE_ENV === 'development') {
 
 ## Configuration API
 
-Set `window.UiCaptureConfig` **before** loading the script to configure behavior:
+Setel objek konfigurasi global `window.UiCaptureConfig` **sebelum** memuat tag `<script>` utama untuk mengubah perilaku default widget:
 
 ```html
 <script>
   window.UiCaptureConfig = {
-    enabled: true   // Force-enable on any domain (not just localhost)
+    enabled: true   // Memaksa widget aktif di domain mana saja (bukan hanya localhost)
   };
 </script>
 <script src="https://cdn.jsdelivr.net/gh/tukang-prompt-ai/ui-capture-tool@v1.1.1/ui-ux-capture-tool.min.js"></script>
 ```
+
+- **Letakan di mana**: Di dalam tag `<head>` atau bagian teratas dari `<body>` pada dokumen HTML Anda, **sebelum** tag pemanggil file `ui-ux-capture-tool.min.js`.
+- **Untuk apa**: Mengatur konfigurasi awal (seperti memaksakan widget tetap aktif dengan properti `enabled: true`) agar widget langsung dikonfigurasi saat script utama dimuat oleh browser.
 
 ### Activation Methods
 

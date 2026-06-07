@@ -604,6 +604,19 @@ class _FlutterWebCapturePageState extends State<FlutterWebCapturePage> {
 
 > ✅ Works with any Flutter WebView package (`webview_flutter`, `flutter_inappwebview`). Requires `JavaScriptMode.unrestricted` enabled so the script can inject and execute properly.
 
+#### Penjelasan Kode (Code Breakdown):
+- **`JavaScriptMode.unrestricted`**: Mengizinkan eksekusi JavaScript di dalam WebView, yang sangat penting agar skrip capture dapat menyuntikkan elemen widget dan berinteraksi dengan DOM Flutter Web.
+- **`_injectCaptureTool()`**: Berfungsi menyuntikkan skrip CDN `ui-ux-capture-tool.min.js` ke dalam body halaman setelah halaman selesai dimuat (`onPageFinished`). 
+  - Mengonfigurasi `window.UiCaptureConfig = { enabled: true }` agar widget capture dipaksa aktif sekalipun halaman tidak berjalan di domain `localhost`.
+  - Menggunakan bendera pelindung `window.__uiCaptureInjected` agar skrip tidak disuntikkan berkali-kali apabila pengguna berpindah halaman atau terjadi re-render komponen di WebView.
+- **`FlutterBridge` (JavaScript Channel)**: Saluran komunikasi dua arah (bridge) yang didaftarkan pada WebView. Pustaka Javascript yang berjalan di web dapat mengirimkan data hasil capture (berupa teks AI Prompt Markdown, JSON, atau link berkas) kembali ke aplikasi native Flutter melalui perintah `FlutterBridge.postMessage(data)`.
+- **`_handleCaptureResult()`**: Fungsi penampung di sisi Dart/Flutter yang dipanggil ketika `FlutterBridge` menerima pesan dari web. Di sini Anda bisa menyimpan berkas secara lokal, menyalin teks ke clipboard perangkat, atau mengunggahnya ke server API.
+- **`captureFlutterPage()`**: Memicu proses capture dari sisi Flutter native (misalnya dari tombol AppBar) dengan menjalankan blok JavaScript di dalam WebView untuk:
+  - Memilih format target framework ke `flutter` (`frameworkTargetSelect`).
+  - Mengatur fidelity mode ke `hifi`.
+  - Memanggil fungsi capture utama `doCapture()`.
+  - Mengambil hasil rancangan prompt AI menggunakan `generateDynamicAIPrompt()` dan mengirimkannya kembali ke Flutter via `FlutterBridge.postMessage()`.
+
 ### React Native
 
 Inject the tool into a React Native **WebView** from `react-native-webview`:
