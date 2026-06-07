@@ -25,14 +25,13 @@ A **self-contained, zero-dependency browser widget** that captures, analyzes, an
 - [Quick Start](#quick-start)
 - [Installation](#installation)
 - [Usage Guide](#usage-guide)
+- [Wireframe Engine Comparison](#wireframe-engine-comparison)
 - [Export Formats](#export-formats)
 - [Framework Integration](#framework-integration)
 - [Configuration API](#configuration-api)
-- [Engine Architecture](#engine-architecture)
 - [Keyboard Shortcuts](#keyboard-shortcuts)
 - [Version History](#version-history)
 - [License](#license)
-- [Contributing](#contributing)
 
 ---
 
@@ -55,33 +54,27 @@ A **self-contained, zero-dependency browser widget** that captures, analyzes, an
 
 ### 🎨 Four Fidelity Capture Modes
 
-| Mode | Visual Output | Best For |
-|---|---|---|
-| **Lo-Fi** — Wireframe | Block-style skeleton wireframe (Volkside-quality visual, HXRE intelligence) | Layout documentation, design reviews |
-| **Mid-Fi** — Grayscale | Full-page grayscale screenshot | Contrast checks, monochrome presentations |
-| **Hi-Fi** — Optimized | Full-color + PNG color quantization (~60% smaller) | Archive, developer handoff |
-| **Raw** — Native | Full pixel-perfect screenshot, no processing | Highest fidelity reference |
+| Mode | Visual Output | File Format | Best For |
+|---|---|---|---|
+| **Lo-Fi** — Wireframe | Pure grayscale block skeleton wireframe | PNG | Layout documentation, design reviews |
+| **Mid-Fi** — Grayscale | Full-page desaturated screenshot | PNG | Contrast checks, monochrome presentations |
+| **Hi-Fi** — Optimized | Full-color screenshot (~60–80% smaller) | JPEG 85% | Archive, developer handoff |
+| **Raw** — Native | Full pixel-perfect screenshot, no processing | PNG | Highest fidelity reference |
 
 ### 📦 Four Export Formats
 
 | Format | File | Contents |
 |---|---|---|
-| **PNG Screenshot** | `{mode}__{slug}__{ts}.png` | Full-page image |
+| **Screenshot** | `{mode}__{slug}__{ts}.png / .jpg` | Full-page image at selected fidelity |
 | **UX Graph Schema** | `ux-graph__{slug}__{ts}.json` | Complete DOM analysis in JSON |
 | **AI Prompt** | `ai-prompt__{slug}__{ts}.md` | 12-section HXRE blueprint with Mermaid |
 | **HTML Wireframe** | `wireframe__{slug}__{ts}.html` | Browser-openable skeleton wireframe |
 
-### 🧩 HXRE DOM Intelligence Engine
+### 🔧 Two Wireframe Engines
 
-Detects **24+ component types**: Navbar, Sidebar, Table, Form, Card, Button, Dialog/Modal, Chart, Alert, **Tabs, Accordion, Pagination, Breadcrumb, Badge/Tag, Toast, Dropdown, Progress Bar, Chat, Kanban, Wizard/Steps, Image/Media**
-
-Runs **10 parallel analysis engines**: Design Token Extractor, Framework Detector, Layout Graph Builder, Accessibility Auditor, State Machine, Flow Engine, Vision Analyzer, Shadow DOM Scanner, IFrame Scanner, Relationship Engine
-
-### 🔧 Two Wireframe Engines (selectable for all modes)
-
-| Engine | Visual Style | Notes |
+| Engine | Style | Notes |
 |---|---|---|
-| **HXRE Wireframe** | Block wireframe + HXRE intelligence labels | Default. Volkside-quality visual output. |
+| **HXRE Wireframe** | Block wireframe + component labels | Default. No external dependencies. |
 | **Volkside Wirify** | Classic Wirify box wireframe | Legacy. Loads jQuery from CDN. |
 
 ### 🚀 Auto Tour
@@ -107,7 +100,7 @@ The widget activates automatically on `localhost`, `127.0.0.1`, `*.local`, `*.te
 **Or use the bookmarklet on any page:**
 
 ```javascript
-javascript:(function(){var s=document.createElement('script');s.src='https://cdn.jsdelivr.net/npm/ui-capture-tool@1.1.1/ui-ux-capture-tool.min.js?v='+Date.now();window.UiCaptureConfig={enabled:true};document.body.appendChild(s);})();
+javascript:(function(){var s=document.createElement('script');s.src='https://cdn.jsdelivr.net/npm/ui-capture-tool@1.1.1/ui-ux-capture-tool.min.js?v='+Date.now();window.UiCaptureConfig={enabled:true};document.body.appendChild(s);})();\n
 ```
 
 Create a browser bookmark and paste the above as the URL.
@@ -154,21 +147,6 @@ Download the compiled file from [GitHub Releases](https://github.com/tukang-prom
 <script src="/path/to/ui-ux-capture-tool.min.js"></script>
 ```
 
-### Local Development (Cloned Repo)
-
-```bash
-git clone https://github.com/tukang-prompt-ai/ui-capture-tool.git
-cd ui-capture-tool
-
-# Install build dependencies
-npm install
-
-# Build the bundle
-npm run build
-# → ui-ux-capture-tool.main.js (unminified, ~220 KB)
-# → ui-ux-capture-tool.min.js  (minified + obfuscated, ~495 KB)
-```
-
 ---
 
 ## Usage Guide
@@ -197,7 +175,7 @@ The **Wireframe Engine** selector is always visible. Select:
 
 ### Step 5 — Click "Capture Page"
 
-The file downloads automatically. For PNG, a step-by-step loading overlay shows progress.
+The file downloads automatically. For PNG/JPEG captures, a step-by-step loading overlay shows progress.
 
 ### Step 6 — Use the AI Prompt
 
@@ -209,24 +187,69 @@ Click **"Copy AI Prompt"** to copy the Markdown blueprint to clipboard. Paste di
 
 ---
 
+## Wireframe Engine Comparison
+
+Both engines are available for **all four fidelity modes** (Lo-Fi, Mid-Fi, Hi-Fi, Raw). The engine controls the wireframe visual output only.
+
+| Feature | 🟣 HXRE Wireframe (Modern) | 🔵 Volkside Wirify (Legacy) |
+|---|---|---|
+| **Visual style** | Block-skeleton overlay drawn on a clean white canvas | Transforms existing DOM elements in-place |
+| **Lo-Fi compliance** | ✅ True grayscale — zero color bleed guaranteed | ✅ Grayscale transform via CSS filter |
+| **Component labels** | ✅ Inline labels (NAVBAR, CARD, BUTTON, TABLE…) | ❌ No component labels |
+| **Component detection** | ✅ 24+ types (Navbar, Sidebar, Table, Form, Card, Modal, Chart, Alert, Tabs, Accordion, Pagination, Breadcrumb, Badge, Toast, Dropdown, Progress, Chat, Kanban, Wizard, Image/Media, Button, Input, Footer, Link) | ❌ Generic box detection only |
+| **Text rendering** | Gray bars replacing all text — true wireframe | Text visible (unstyled) |
+| **Image handling** | ✅ X-box placeholder (`╳`) at exact image position | ❌ Image still visible (dimmed) |
+| **External dependencies** | ✅ None — fully self-contained | ⚠️ Loads jQuery from CDN |
+| **CSP compatibility** | ✅ Works with strict Content-Security-Policy | ⚠️ May be blocked (CDN script fetch) |
+| **Page compatibility** | ✅ All pages | ⚠️ May conflict with jQuery-based pages |
+| **Render method** | Overlay div appended to `<body>`, captured by html2canvas | In-place DOM class injection |
+| **Inline style handling** | ✅ Strips all inline styles before capture, restores after | ✅ CSS filter overrides |
+| **Color variable leakage** | ✅ Zero (inline styles stripped + `lofi-wireframe` class) | ✅ Filter-based, no leakage |
+| **Performance** | Fast (DOM scan + overlay build ~50–200ms) | Moderate (jQuery init + DOM rewrite) |
+| **Recommended for** | All use cases | Legacy compatibility or preference |
+
+### When to use HXRE
+
+- You need **component-labeled** wireframes for AI prompt generation or design review
+- You want **no external dependencies** (strict CSP, offline, intranet)
+- You need **guaranteed Lo-Fi compliance** (pure grayscale, no color bleed)
+- You are capturing **complex pages** with many component types
+
+### When to use Volkside
+
+- You prefer the **classic Wirify look** (familiar to teams already using Wirify)
+- You need a quick wireframe without component intelligence
+- The page already loads jQuery (no CDN overhead)
+
+---
+
 ## Export Formats
 
-### PNG Screenshot
+### Screenshot (PNG / JPEG)
 
-**Filename:** `{mode}__{slug}__{timestamp}.png`
+**Filename:** `{mode}__{slug}__{timestamp}.{ext}`
 
 ```
-hifi__admin_dashboard__2026-06-07T10-30-00.png
 lofi__checkout__2026-06-07T11-00-00.png
+midfi__dashboard__2026-06-07T11-00-00.png
+hifi__admin__2026-06-07T10-30-00.jpg
+raw__landing__2026-06-07T10-00-00.png
 ```
 
-Includes adaptive resolution scaling and PNG color quantization (Hi-Fi) for ~60% size reduction.
+| Mode | Format | Quality |
+|---|---|---|
+| Lo-Fi | PNG | Lossless (grayscale, flat — PNG is optimal) |
+| Mid-Fi | PNG | Lossless (grayscale) |
+| Hi-Fi | JPEG | 85% quality (~60–80% smaller than PNG for rich UI) |
+| Raw | PNG | Lossless (full pixel-perfect fidelity) |
+
+Adaptive resolution scaling is applied automatically for very tall pages (> 4000px) to keep files manageable.
 
 ### UX Graph Schema (JSON)
 
 **Filename:** `ux-graph__{slug}__{timestamp}.json`
 
-Complete DOM intelligence snapshot. See [DOCS.md](./DOCS.md#ux-graph-schema-json) for the full JSON schema.
+Complete DOM intelligence snapshot. See [DOCS.md](./DOCS.md) for the full JSON schema.
 
 ### AI Prompt File (Markdown)
 
@@ -509,61 +532,6 @@ Set `window.UiCaptureConfig` **before** loading the script to configure behavior
 
 ---
 
-## Engine Architecture
-
-The tool is built on **HXRE (Hybrid UX Reconstruction Engine)** with **24 integrated modules**:
-
-### Core & Analysis Pipeline
-
-| Module | Description |
-|---|---|
-| **Page Loader** | Auto-scroll + lazy asset resolution. Waits for fonts, images, CSS before capture. |
-| **DOM Collector** | Full recursive DOM traversal including open Shadow Roots and same-origin iframes. |
-| **Visual Tree Engine** | Bounding-box layout graph builder — maps the structural hierarchy with coordinates. |
-| **Region Detector** | Identifies Navbar, Sidebar (L/R), Main Content, Footer regions automatically. |
-
-### UX Intelligence Engines
-
-| Module | Description |
-|---|---|
-| **Component Knowledge Engine** | Detects 24+ component types by tag, role, and CSS class fingerprinting. |
-| **Relationship Engine** | Maps functional relationships between components (filter→table, nav→modal, etc.). |
-| **Interaction Engine** | Identifies clickable, draggable, submittable, and focusable interaction points. |
-| **State Engine** | Detects Loading, Empty, Error, Success states and `aria-expanded` active elements. |
-| **Flow Engine** | Auto-generates User Journey steps based on page intent and component composition. |
-| **Semantic Engine** | Classifies page intent: `dashboard`, `form`, `auth`, `listing`, `detail`, `landing`, etc. |
-
-### Visual & Tokenization Layers
-
-| Module | Description |
-|---|---|
-| **UX Graph Builder** | Assembles all analysis into a unified JSON schema. |
-| **Visual Graph Builder** | Captures grid alignment, margin/padding rhythm, and typographic hierarchy. |
-| **Design Token Extractor** | Reads computed CSS for top fonts, colors (hex-normalized), border-radius, box-shadow. |
-| **Responsive Engine** | Reports viewport dimensions and device category (Desktop/Tablet/Mobile). |
-| **Framework Detector** | Fingerprints 10+ design systems: Bootstrap, Tailwind, ShadCN, AdminLTE, MUI, Mantine, etc. |
-
-### Generation & Output Layer
-
-| Module | Description |
-|---|---|
-| **AI Reconstruction Engine** | Generates the 12-section HXRE Markdown prompt with Mermaid + skeleton reference. |
-| **HXRE Wireframe Engine** | Block-style CSS wireframe (Volkside-quality visual with component intelligence). |
-| **Wirify Engine** | Volkside Wirify legacy engine (jQuery-based classic wireframe). |
-| **HTML Wireframe Generator** | Produces self-contained `.html` skeleton file with component inventory legend. |
-| **Framework Code Engine** | Generates framework-specific code generation guidelines for 10 targets. |
-
-### Optimization & Infrastructure
-
-| Module | Description |
-|---|---|
-| **PNG Optimization Engine** | Color quantization (factor 32) + adaptive scale for ~60% size reduction. |
-| **Export Engine** | Handles all 4 export formats with UTF-8 BOM for cross-editor compatibility. |
-| **Plugin Engine** | Design system class library for Bootstrap, AdminLTE, ShadCN, Ant Design, MUI. |
-| **Analytics Engine** | Stats tab: node count, render time, file size, accuracy, detected theme. |
-
----
-
 ## Keyboard Shortcuts
 
 | Shortcut | Action |
@@ -588,9 +556,12 @@ The tool is built on **HXRE (Hybrid UX Reconstruction Engine)** with **24 integr
 - ✨ **AI Prompt HXRE format** — Standardized 12-section output with metadata table, component inventory table, state machine table
 - ✨ **DOCS.md** — Full English documentation with framework-specific code examples
 
-**Fixes & Improvements:**
-- 🔧 AI Prompt sections standardized to English headers throughout
-- 🔧 Status messages updated to English for cross-team consistency
+**Fixes:**
+- 🔧 HXRE Lo-Fi: Zero color bleed — inline styles stripped, overlay anchored to `document.body` (was appended to `<html>`, invisible to html2canvas)
+- 🔧 Hi-Fi export now uses JPEG 85% — 60–80% smaller vs PNG with minimal visible difference
+- 🔧 Loading overlay excluded from wireframe element tracing — no longer appears as boxes in HXRE render
+- 🔧 Alert Box wireframe color changed from yellow to grayscale (Lo-Fi compliance)
+- 🔧 AI Prompt sections standardized to English headers
 - 🔧 Fixed `oklab`/`oklch` detection — more cases handled in CSS color monkeypatch
 - 🔧 Chart/Canvas detection improved — excludes tiny inline SVG icons
 - 🔧 UTF-8 BOM on all text exports (JSON, Markdown, HTML) for Notepad/Excel compatibility
@@ -636,34 +607,19 @@ For commercial licensing inquiries, contact the author.
 
 ---
 
-## Contributing
-
-This repository uses a **closed contribution model** due to the CC BY-NC-ND 4.0 license.
-
-**Bug reports are welcome:** [Open an issue](https://github.com/tukang-prompt-ai/ui-capture-tool/issues) with:
-1. Browser and version
-2. Operating system
-3. Steps to reproduce
-4. Expected vs. actual behavior
-5. Console errors (if any)
-
-**Feature requests:** Open an issue with the `enhancement` label. Include the use case and how it aligns with the HXRE / V3 blueprint.
-
----
-
 ## Support
 
 | Channel | Link |
 |---|---|
 | **Full Documentation** | [DOCS.md](./DOCS.md) |
-| **Blueprint & Architecture** | [BLUEPRINT/V3.md](./BLUEPRINT/V3.md) · [BLUEPRINT/ENGINE/HXRE.md](./BLUEPRINT/ENGINE/HXRE.md) |
 | **Bug Reports** | [GitHub Issues](https://github.com/tukang-prompt-ai/ui-capture-tool/issues) |
-| **NPM Registry** | [cdn.jsdelivr.net/npm/ui-capture-tool](https://cdn.jsdelivr.net/npm/ui-capture-tool@latest/ui-ux-capture-tool.min.js) |
+| **Releases & Downloads** | [GitHub Releases](https://github.com/tukang-prompt-ai/ui-capture-tool/releases) |
+| **CDN** | [cdn.jsdelivr.net/npm/ui-capture-tool](https://cdn.jsdelivr.net/npm/ui-capture-tool@latest/ui-ux-capture-tool.min.js) |
 
 ---
 
 <div align="center">
 
-Made with ❤️ by [perawitayasa](https://github.com/perawitayasa) · Powered by [HXRE Engine](./BLUEPRINT/ENGINE/HXRE.md)
+Made with ❤️ by [perawitayasa](https://github.com/perawitayasa) · Powered by HXRE Engine v7
 
 </div>
