@@ -92,7 +92,7 @@ Generates framework-specific AI reconstruction instructions for: **Flutter (Dart
 **One line — drop into any HTML page:**
 
 ```html
-<script src="https://cdn.jsdelivr.net/npm/ui-capture-tool@latest/ui-ux-capture-tool.min.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/tukang-prompt-ai/ui-capture-tool@main/ui-ux-capture-tool.min.js"></script>
 ```
 
 The widget activates automatically on `localhost`, `127.0.0.1`, `*.local`, `*.test` domains.
@@ -100,7 +100,7 @@ The widget activates automatically on `localhost`, `127.0.0.1`, `*.local`, `*.te
 **Or use the bookmarklet on any page:**
 
 ```javascript
-javascript:(function(){var s=document.createElement('script');s.src='https://cdn.jsdelivr.net/npm/ui-capture-tool@1.1.1/ui-ux-capture-tool.min.js?v='+Date.now();window.UiCaptureConfig={enabled:true};document.body.appendChild(s);})();\n
+javascript:(function(){var s=document.createElement('script');s.src='https://cdn.jsdelivr.net/gh/tukang-prompt-ai/ui-capture-tool@v1.1.1/ui-ux-capture-tool.min.js?v='+Date.now();window.UiCaptureConfig={enabled:true};document.body.appendChild(s);})();\n
 ```
 
 Create a browser bookmark and paste the above as the URL.
@@ -113,10 +113,10 @@ Create a browser bookmark and paste the above as the URL.
 
 ```html
 <!-- Latest version -->
-<script src="https://cdn.jsdelivr.net/npm/ui-capture-tool@latest/ui-ux-capture-tool.min.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/tukang-prompt-ai/ui-capture-tool@main/ui-ux-capture-tool.min.js"></script>
 
 <!-- Pinned to v1.1.1 (recommended for production) -->
-<script src="https://cdn.jsdelivr.net/npm/ui-capture-tool@1.1.1/ui-ux-capture-tool.min.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/tukang-prompt-ai/ui-capture-tool@v1.1.1/ui-ux-capture-tool.min.js"></script>
 ```
 
 ### NPM / Package Manager
@@ -295,7 +295,7 @@ A self-contained, browser-openable `.html` file with:
 ```html
 <body>
   <!-- content -->
-  <script src="https://cdn.jsdelivr.net/npm/ui-capture-tool@latest/ui-ux-capture-tool.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/gh/tukang-prompt-ai/ui-capture-tool@main/ui-ux-capture-tool.min.js"></script>
 </body>
 ```
 
@@ -313,7 +313,7 @@ export default function DevCapture() {
   useEffect(() => {
     if (process.env.NODE_ENV !== 'development') return;
     const s = document.createElement('script');
-    s.src = 'https://cdn.jsdelivr.net/npm/ui-capture-tool@latest/ui-ux-capture-tool.min.js';
+    s.src = 'https://cdn.jsdelivr.net/gh/tukang-prompt-ai/ui-capture-tool@main/ui-ux-capture-tool.min.js';
     document.body.appendChild(s);
   }, []);
   return null;
@@ -341,7 +341,7 @@ export default function RootLayout({ children }) {
 export default defineNuxtPlugin(() => {
   if (process.dev) {
     const s = document.createElement('script');
-    s.src = 'https://cdn.jsdelivr.net/npm/ui-capture-tool@latest/ui-ux-capture-tool.min.js';
+    s.src = 'https://cdn.jsdelivr.net/gh/tukang-prompt-ai/ui-capture-tool@main/ui-ux-capture-tool.min.js';
     document.body.appendChild(s);
   }
 });
@@ -355,7 +355,7 @@ export default defineNuxtPlugin(() => {
 ```blade
 {{-- layouts/app.blade.php --}}
 @if(app()->isLocal())
-  <script src="https://cdn.jsdelivr.net/npm/ui-capture-tool@latest/ui-ux-capture-tool.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/gh/tukang-prompt-ai/ui-capture-tool@main/ui-ux-capture-tool.min.js"></script>
 @endif
 ```
 
@@ -369,7 +369,7 @@ export default defineNuxtPlugin(() => {
 function enqueue_ui_capture() {
   if (defined('WP_DEBUG') && WP_DEBUG) {
     wp_enqueue_script('ui-capture', 
-      'https://cdn.jsdelivr.net/npm/ui-capture-tool@latest/ui-ux-capture-tool.min.js',
+      'https://cdn.jsdelivr.net/gh/tukang-prompt-ai/ui-capture-tool@main/ui-ux-capture-tool.min.js',
       [], null, true);
   }
 }
@@ -384,12 +384,12 @@ add_action('wp_enqueue_scripts', 'enqueue_ui_capture');
 ```html
 <!-- Django -->
 {% if debug %}
-  <script src="https://cdn.jsdelivr.net/npm/ui-capture-tool@latest/ui-ux-capture-tool.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/gh/tukang-prompt-ai/ui-capture-tool@main/ui-ux-capture-tool.min.js"></script>
 {% endif %}
 
 <!-- Rails ERB -->
 <% if Rails.env.development? %>
-  <%= javascript_include_tag "https://cdn.jsdelivr.net/npm/ui-capture-tool@latest/ui-ux-capture-tool.min.js" %>
+  <%= javascript_include_tag "https://cdn.jsdelivr.net/gh/tukang-prompt-ai/ui-capture-tool@main/ui-ux-capture-tool.min.js" %>
 <% end %>
 ```
 
@@ -410,7 +410,7 @@ final controller = WebViewController()
       controller.runJavaScript('''
         window.UiCaptureConfig = { enabled: true };
         var s = document.createElement('script');
-        s.src = 'https://cdn.jsdelivr.net/npm/ui-capture-tool@1.1.1/ui-ux-capture-tool.min.js';
+        s.src = 'https://cdn.jsdelivr.net/gh/tukang-prompt-ai/ui-capture-tool@v1.1.1/ui-ux-capture-tool.min.js';
         document.body.appendChild(s);
       ''');
     },
@@ -447,7 +447,7 @@ const INJECT = `
   (function() {
     window.UiCaptureConfig = { enabled: true };
     var s = document.createElement('script');
-    s.src = 'https://cdn.jsdelivr.net/npm/ui-capture-tool@1.1.1/ui-ux-capture-tool.min.js';
+    s.src = 'https://cdn.jsdelivr.net/gh/tukang-prompt-ai/ui-capture-tool@v1.1.1/ui-ux-capture-tool.min.js';
     document.body.appendChild(s);
   })(); true;
 `;
@@ -479,7 +479,7 @@ export class AppComponent {
   ngOnInit() {
     if (!this.platform.is('capacitor')) {
       const s = document.createElement('script');
-      s.src = 'https://cdn.jsdelivr.net/npm/ui-capture-tool@latest/ui-ux-capture-tool.min.js';
+      s.src = 'https://cdn.jsdelivr.net/gh/tukang-prompt-ai/ui-capture-tool@main/ui-ux-capture-tool.min.js';
       document.body.appendChild(s);
     }
   }
@@ -518,7 +518,7 @@ Set `window.UiCaptureConfig` **before** loading the script to configure behavior
     enabled: true   // Force-enable on any domain (not just localhost)
   };
 </script>
-<script src="https://cdn.jsdelivr.net/npm/ui-capture-tool@1.1.1/ui-ux-capture-tool.min.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/tukang-prompt-ai/ui-capture-tool@v1.1.1/ui-ux-capture-tool.min.js"></script>
 ```
 
 ### Activation Methods
@@ -614,7 +614,7 @@ For commercial licensing inquiries, contact the author.
 | **Full Documentation** | [DOCS.md](./DOCS.md) |
 | **Bug Reports** | [GitHub Issues](https://github.com/tukang-prompt-ai/ui-capture-tool/issues) |
 | **Releases & Downloads** | [GitHub Releases](https://github.com/tukang-prompt-ai/ui-capture-tool/releases) |
-| **CDN** | [cdn.jsdelivr.net/npm/ui-capture-tool](https://cdn.jsdelivr.net/npm/ui-capture-tool@latest/ui-ux-capture-tool.min.js) |
+| **CDN** | [cdn.jsdelivr.net/gh/tukang-prompt-ai/ui-capture-tool](https://cdn.jsdelivr.net/gh/tukang-prompt-ai/ui-capture-tool@main/ui-ux-capture-tool.min.js) |
 
 ---
 

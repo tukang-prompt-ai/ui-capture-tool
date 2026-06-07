@@ -70,7 +70,7 @@ The tool runs **100% client-side** in the browser. No data is sent to any server
 The fastest way to get started is a single script tag:
 
 ```html
-<script src="https://cdn.jsdelivr.net/npm/ui-capture-tool@latest/ui-ux-capture-tool.min.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/tukang-prompt-ai/ui-capture-tool@main/ui-ux-capture-tool.min.js"></script>
 ```
 
 The widget appears automatically on `localhost`, `127.0.0.1`, `.local`, and `.test` domains.
@@ -85,10 +85,10 @@ Add the script to the bottom of your HTML `<body>`:
 
 ```html
 <!-- Always get the latest version -->
-<script src="https://cdn.jsdelivr.net/npm/ui-capture-tool@latest/ui-ux-capture-tool.min.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/tukang-prompt-ai/ui-capture-tool@main/ui-ux-capture-tool.min.js"></script>
 
 <!-- Pin to a specific version -->
-<script src="https://cdn.jsdelivr.net/npm/ui-capture-tool@1.1.1/ui-ux-capture-tool.min.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/tukang-prompt-ai/ui-capture-tool@v1.1.1/ui-ux-capture-tool.min.js"></script>
 ```
 
 ### NPM / Package Manager
@@ -397,7 +397,7 @@ A self-contained, browser-openable `.html` file that renders a CSS skeleton wire
 <html lang="en">
 <body>
   <!-- Your page content -->
-  <script src="https://cdn.jsdelivr.net/npm/ui-capture-tool@latest/ui-ux-capture-tool.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/gh/tukang-prompt-ai/ui-capture-tool@main/ui-ux-capture-tool.min.js"></script>
 </body>
 </html>
 ```
@@ -415,7 +415,7 @@ export default function DevCapture() {
   useEffect(() => {
     if (process.env.NODE_ENV !== 'development') return;
     const s = document.createElement('script');
-    s.src = 'https://cdn.jsdelivr.net/npm/ui-capture-tool@latest/ui-ux-capture-tool.min.js';
+    s.src = 'https://cdn.jsdelivr.net/gh/tukang-prompt-ai/ui-capture-tool@main/ui-ux-capture-tool.min.js';
     document.body.appendChild(s);
   }, []);
   return null;
@@ -451,7 +451,7 @@ export default function Document() {
         <Main />
         <NextScript />
         {process.env.NODE_ENV === 'development' && (
-          <script src="https://cdn.jsdelivr.net/npm/ui-capture-tool@latest/ui-ux-capture-tool.min.js" />
+          <script src="https://cdn.jsdelivr.net/gh/tukang-prompt-ai/ui-capture-tool@main/ui-ux-capture-tool.min.js" />
         )}
       </body>
     </Html>
@@ -467,7 +467,7 @@ export default {
   install() {
     if (!import.meta.env.DEV) return;
     const s = document.createElement('script');
-    s.src = 'https://cdn.jsdelivr.net/npm/ui-capture-tool@latest/ui-ux-capture-tool.min.js';
+    s.src = 'https://cdn.jsdelivr.net/gh/tukang-prompt-ai/ui-capture-tool@main/ui-ux-capture-tool.min.js';
     document.body.appendChild(s);
   }
 };
@@ -489,7 +489,7 @@ app.mount('#app');
 <body>
     @yield('content')
     @if(app()->isLocal())
-        <script src="https://cdn.jsdelivr.net/npm/ui-capture-tool@latest/ui-ux-capture-tool.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/gh/tukang-prompt-ai/ui-capture-tool@main/ui-ux-capture-tool.min.js"></script>
     @endif
 </body>
 ```
@@ -530,7 +530,7 @@ class _MyWebViewState extends State<MyWebView> {
             (function() {
               window.UiCaptureConfig = { enabled: true };
               var s = document.createElement('script');
-              s.src = 'https://cdn.jsdelivr.net/npm/ui-capture-tool@1.1.1/ui-ux-capture-tool.min.js';
+              s.src = 'https://cdn.jsdelivr.net/gh/tukang-prompt-ai/ui-capture-tool@v1.1.1/ui-ux-capture-tool.min.js';
               document.body.appendChild(s);
             })();
           ''');
@@ -621,7 +621,7 @@ const INJECT_SCRIPT = `
   (function() {
     window.UiCaptureConfig = { enabled: true };
     var s = document.createElement('script');
-    s.src = 'https://cdn.jsdelivr.net/npm/ui-capture-tool@1.1.1/ui-ux-capture-tool.min.js';
+    s.src = 'https://cdn.jsdelivr.net/gh/tukang-prompt-ai/ui-capture-tool@v1.1.1/ui-ux-capture-tool.min.js';
     document.body.appendChild(s);
   })();
   true;
@@ -687,7 +687,7 @@ export class AppComponent implements OnInit {
     if (!this.platform.is('capacitor')) {
       // Only inject in browser/dev mode, not on native device
       const s = document.createElement('script');
-      s.src = 'https://cdn.jsdelivr.net/npm/ui-capture-tool@latest/ui-ux-capture-tool.min.js';
+      s.src = 'https://cdn.jsdelivr.net/gh/tukang-prompt-ai/ui-capture-tool@main/ui-ux-capture-tool.min.js';
       document.body.appendChild(s);
     }
   }
@@ -704,7 +704,7 @@ function App() {
   useEffect(() => {
     if (!isPlatform('capacitor') && process.env.NODE_ENV === 'development') {
       const s = document.createElement('script');
-      s.src = 'https://cdn.jsdelivr.net/npm/ui-capture-tool@latest/ui-ux-capture-tool.min.js';
+      s.src = 'https://cdn.jsdelivr.net/gh/tukang-prompt-ai/ui-capture-tool@main/ui-ux-capture-tool.min.js';
       document.body.appendChild(s);
     }
   }, []);
